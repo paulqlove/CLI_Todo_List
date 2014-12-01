@@ -13,10 +13,10 @@ function listItems($list){
     return $string;
 }
 function getInput($upper = false){
-    $input = trim(fgets(STDIN));
+    $input = strtoupper(trim(fgets(STDIN)));
 
     if ($upper == true) {
-       return strtoupper($input);
+       return $input;
     } else {
         return $input;
     }
