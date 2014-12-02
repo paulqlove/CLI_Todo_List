@@ -20,14 +20,49 @@ function getInput($upper = false){
     } else {
         return $input;
     }
-    
 }
+//sort menu function
+function sort_menu($inputSort, $items) {
+    //switch
+    switch($inputSort){
+        case 'A':
+            asort($items);
+            break;
+        case 'Z':
+            arsort($items);
+            break;
+        case 'O':
+            ksort($items);
+            break;
+        case 'R':
+            krsort($items);
+            break;
+       
+    }  return $items;
+        
+
+/*low to high items
+    if ($inputSort == 'A') {
+        asort($items);
+    } elseif ($inputSort == 'Z') {
+        arsort($items);
+    } elseif ($inputSort == 'O'){
+        ksort($items); 
+    } elseif ($inputSort == 'R') {
+        krsort($items);
+    }//return reordered aray 
+    return $items;*/
+    
+
+    }
+    
+
 do {
      // Echo the list produced by the function
      echo listItems($items);
 
      // Show the menu options
-     echo '(N)ew item, (R)emove item, (Q)uit : ';
+     echo '(N)ew item, (R)emove item, (Q)uit, (S)ort : ';
 
      // Get the input from user
      // Use trim() to remove whitespace and newlines
@@ -46,6 +81,13 @@ do {
          $key = getInput();
          // Remove from array
          unset($items[$key]);
+    //Sort menu is here
+     } elseif ($input == 'S') {
+        echo ' (A)-Z, (Z)-A, (O)rder entered, (R)everse order entered :';
+         $inputSort = getInput(true);
+         //redifine $items when calling for new func sort_menu
+         $items = sort_menu($inputSort, $items);
+         
      }
  // Exit when input is (Q)uit
  } while ($input != 'Q');
