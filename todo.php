@@ -92,6 +92,37 @@ function readList($fileOpen){
    
     return $items;
 }
+//function to save a file
+function checkExist($fileName){
+    //check if file exist
+    while (file_exists($fileName)) {
+        //echo the option to overwrite or not
+        echo 'File Exists:' . PHP_EOL;
+        echo 'Overwrite?' . ' (Y)es' . ' (N)o' . PHP_EOL;
+        //get the input to overwrite or not
+        $overWrite = getInput(true);
+        //switch statement on overwrite
+        if($overWrite == 'N') {
+            echo 'Enter new file name.' . PHP_EOL;
+            $fileName = getInput();
+        } elseif ($overWrite = 'Y') {
+            return $fileName;
+        }
+    return $fileName;
+    } 
+}
+function newFile($fileName, $items){
+    //open a file that you named
+    $handle = fopen($fileName, 'w');
+    //foreach loop to write each new array item
+    foreach ($items as $listItem) {
+    //write each item into the file name you entered
+       fwrite($handle, $listItem . PHP_EOL);
+    }
+    echo 'file saved' . PHP_EOL;
+    fclose($handle);
+}
+
 /*low to high items
     if ($inputSort == 'A') {
         asort($items);
@@ -111,7 +142,7 @@ do {
      echo listItems($items);
 
      // Show the menu options
-     echo '(N)ew item, (R)emove item, (Q)uit, (S)ort, (O)pen file : ';
+     echo '(N)ew item, (R)emove item, (Q)uit, (S)ort, (O)pen file s(A)ve : ';
 
      // Get the input from user
      // Use trim() to remove whitespace and newlines
@@ -154,8 +185,17 @@ do {
         $fileOpen = getInput();
         //call function that opens file here
         $items = readList($fileOpen);
-        
-        
+         
+    }elseif ($input == 'A') {
+        //ask user to enter the path they want to save 
+        echo 'Save this file as:' . PHP_EOL;
+        $fileName = getInput();
+        //checks if file exist
+        $fileName = checkExist($fileName);
+//        $fileName = getInput();
+        //call function that saves file
+        newFile($fileName, $items);
+
     }
  // Exit when input is (Q)uit
  } while ($input != 'Q');
